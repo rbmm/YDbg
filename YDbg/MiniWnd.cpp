@@ -206,7 +206,7 @@ HWND YDlg::Show(HINSTANCE hInstance, PCWSTR lpTemplateName, HWND hWndParent, LPA
 	return CreateDialogParamW(hInstance, lpTemplateName, hWndParent, DlgProcStart, (LPARAM)&params);
 }
 
-INT_PTR CALLBACK YDlg::DlgProc(HWND /*hwnd*/, UINT umsg, WPARAM /*wParam*/, LPARAM /*lParam*/)
+INT_PTR YDlg::DlgProc(HWND /*hwnd*/, UINT umsg, WPARAM /*wParam*/, LPARAM /*lParam*/)
 {
 	switch (umsg)
 	{

@@ -343,31 +343,33 @@ void YProcess::OnUnloadDll(PVOID lpBaseOfDll)
 
 BOOL YProcess::OnCreateProcess(ULONG dwProcessId, ULONG dwThreadId, PDBGUI_CREATE_PROCESS CreateProcessInfo)
 {
-	//NtClose(CreateProcessInfo->HandleToProcess);
-	//CreateProcessInfo->HandleToProcess = OpenProcess(PROCESS_ALL_ACCESS, 0, dwProcessId);
+	NtClose(CreateProcessInfo->HandleToProcess);
 
-	_M_dwProcessId = dwProcessId;
-
-	if (_M_hwndLog = YLogFrame::CreateLog(this))
+	if (CreateProcessInfo->HandleToProcess = OpenProcess(PROCESS_ALL_ACCESS, 0, dwProcessId))
 	{
-		_M_hProcess = CreateProcessInfo->HandleToProcess;
+		_M_dwProcessId = dwProcessId;
 
-		DBGUI_CREATE_THREAD CreateThreadInfo = { 
-			CreateProcessInfo->HandleToThread, CreateProcessInfo->NewProcess.InitialThread
-		};
+		if (_M_hwndLog = YLogFrame::CreateLog(this))
+		{
+			_M_hProcess = CreateProcessInfo->HandleToProcess;
 
-		OnCreateThread(dwThreadId, &CreateThreadInfo);
+			DBGUI_CREATE_THREAD CreateThreadInfo = {
+				CreateProcessInfo->HandleToThread, CreateProcessInfo->NewProcess.InitialThread
+			};
 
-		DBGKM_LOAD_DLL LoadDll = { 
-			CreateProcessInfo->NewProcess.FileHandle, 
-			CreateProcessInfo->NewProcess.BaseOfImage,
-			CreateProcessInfo->NewProcess.DebugInfoFileOffset,
-			CreateProcessInfo->NewProcess.DebugInfoSize
-		};
+			OnCreateThread(dwThreadId, &CreateThreadInfo);
 
-		OnLoadDll(&LoadDll, TRUE);
+			DBGKM_LOAD_DLL LoadDll = {
+				CreateProcessInfo->NewProcess.FileHandle,
+				CreateProcessInfo->NewProcess.BaseOfImage,
+				CreateProcessInfo->NewProcess.DebugInfoFileOffset,
+				CreateProcessInfo->NewProcess.DebugInfoSize
+			};
 
-		return TRUE;
+			OnLoadDll(&LoadDll, TRUE);
+
+			return TRUE;
+		}
 	}
 
 	NtClose(CreateProcessInfo->NewProcess.FileHandle);
@@ -388,22 +390,8 @@ void YProcess::OnExitProcess(ULONG dwExitCode)
 
 void YProcess::Rundown()
 {
-	if (_IsDetachCalled)
-	{
-		return ;
-	}
-
-	_IsDetachCalled = TRUE;
-
-	if (_M_hwndLog)
-	{
-		YLogFrame::Detach(_M_hwndLog);
-		_M_hwndLog = 0;
-	}
-
 	if (!_IsTerminated)
 	{
-
 		if (_M_dwThreadId)
 		{
 			CLIENT_ID cid = { (HANDLE)(ULONG_PTR)_M_dwProcessId, (HANDLE)(ULONG_PTR)_M_dwThreadId };
@@ -419,10 +407,26 @@ void YProcess::Rundown()
 
 		if (0 > status)
 		{
+			printf(prGen, L"DbgUiStopDebugging = %x\r\n", status);
 			return ;
 		}
 
 		_IsTerminated = TRUE;
+
+		printf(prGen, L"^^^^ Detached ^^^^\r\n");
+	}
+
+	if (_IsDetachCalled)
+	{
+		return;
+	}
+
+	_IsDetachCalled = TRUE;
+
+	if (_M_hwndLog)
+	{
+		YLogFrame::Detach(_M_hwndLog);
+		_M_hwndLog = 0;
 	}
 
 	if (_IsInserted)

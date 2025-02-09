@@ -54,9 +54,9 @@ LRESULT YLogFrame::WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam
 		{
 			WCHAR sz[32];
 			swprintf_s(sz, _countof(sz), L"[%x]", _M_process->getId());
-			if (CustomMessageBox(hwnd, sz, L"Terminate ?", MB_ICONQUESTION|MB_DEFBUTTON2|MB_YESNO) == IDYES)
+			if (CustomMessageBox(hwnd, sz, L"Detach ?", MB_ICONQUESTION|MB_DEFBUTTON2|MB_YESNO) == IDYES)
 			{
-				_M_process->Terminate();
+				_M_process->Rundown();
 			}
 			return 0;
 		}

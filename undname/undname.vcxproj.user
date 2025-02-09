@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="Current" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <LocalDebuggerCommandArguments>*??_C@_1BO@PBBLJICK@?$AA?2?$AAR?$AAE?$AAG?$AAI?$AAS?$AAT?$AAR?$AAY?$AA?2?$AAU?$AAS?$AAE?$AAR@LBKOJDO@*??_C@_0BG@PJIIIGBK@FileSize?5?5?5?5?5?5?3?5?$CFI64u@*?func1@a@@AAEXH@Z*</LocalDebuggerCommandArguments>
+    <DebuggerFlavor>WindowsLocalDebugger</DebuggerFlavor>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <LocalDebuggerCommandArguments>*??_C@_1BO@PBBLJICK@?$AA?2?$AAR?$AAE?$AAG?$AAI?$AAS?$AAT?$AAR?$AAY?$AA?2?$AAU?$AAS?$AAE?$AAR@LBKOJDO@*??_C@_0BG@PJIIIGBK@FileSize?5?5?5?5?5?5?3?5?$CFI64u@*?func1@a@@AAEXH@Z*</LocalDebuggerCommandArguments>
+    <DebuggerFlavor>WindowsLocalDebugger</DebuggerFlavor>
+  </PropertyGroup>
+</Project>
