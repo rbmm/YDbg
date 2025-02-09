@@ -4,7 +4,7 @@ how is undecorate C++ symbol name ?
 for this can be used or `UnDecorateSymbolName` api from Dbghelp.dll or `__unDNameEx` (have 3 additional parameters, compare to `UnDecorateSymbolName` ) from msvcrt.dll ot vcruntime*.dll
 i not deep compare it implementation, but probably all it do the same. say util undname.exe from vs kit, use __unDNameEx from vcruntime140.dll
 
-however all this implementation fail undecorate c++ string literals, by some reason. if pass such symbol (begin with ??_C@_ ) to it, they simply output `string'. 
+however all this implementation fail undecorate c++ string literals, by some reason. if pass such symbol (begin with `??_C@_` ) to it, they simply output `string'. 
 sometime something like 
 ```
 ::FNODOBFM::`string'
