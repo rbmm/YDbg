@@ -293,7 +293,7 @@ void undname(PWSTR name)
 		{
 			char buf[0x800];
 			PSTR NameSpace = 0;
-			if (psz = unDNameEx(psz, buf, sizeof(buf), UNDNAME_DEFAULT, &NameSpace))
+			if (psz = unDNameEx(psz, buf, sizeof(buf), 0, &NameSpace))
 			{
 				if (NameSpace)
 				{
